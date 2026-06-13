@@ -1702,3 +1702,301 @@ ul { list-style: none; }
     .nav-container { padding: 0 16px; }
     .container { padding: 0 16px; }
 }
+
+/* ============================================
+   Hero - 灵动动画效果
+   ============================================ */
+
+/* Floating particles */
+.hero-particles {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(200, 149, 108, 0.3);
+    border-radius: 50%;
+    animation: floatParticle linear infinite;
+}
+
+.particle:nth-child(1) {
+    width: 6px; height: 6px;
+    left: 10%;
+    animation-duration: 18s;
+    animation-delay: 0s;
+    background: rgba(200, 149, 108, 0.25);
+}
+
+.particle:nth-child(2) {
+    width: 3px; height: 3px;
+    left: 25%;
+    animation-duration: 22s;
+    animation-delay: 2s;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.particle:nth-child(3) {
+    width: 5px; height: 5px;
+    left: 40%;
+    animation-duration: 20s;
+    animation-delay: 4s;
+    background: rgba(200, 149, 108, 0.2);
+}
+
+.particle:nth-child(4) {
+    width: 4px; height: 4px;
+    left: 55%;
+    animation-duration: 25s;
+    animation-delay: 1s;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.particle:nth-child(5) {
+    width: 7px; height: 7px;
+    left: 70%;
+    animation-duration: 19s;
+    animation-delay: 3s;
+    background: rgba(200, 149, 108, 0.2);
+}
+
+.particle:nth-child(6) {
+    width: 3px; height: 3px;
+    left: 85%;
+    animation-duration: 23s;
+    animation-delay: 5s;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.particle:nth-child(7) {
+    width: 5px; height: 5px;
+    left: 50%;
+    animation-duration: 21s;
+    animation-delay: 7s;
+    background: rgba(200, 149, 108, 0.15);
+}
+
+.particle:nth-child(8) {
+    width: 4px; height: 4px;
+    left: 15%;
+    animation-duration: 17s;
+    animation-delay: 6s;
+    background: rgba(200, 149, 108, 0.3);
+}
+
+.particle:nth-child(9) {
+    width: 6px; height: 6px;
+    left: 65%;
+    animation-duration: 24s;
+    animation-delay: 8s;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.particle:nth-child(10) {
+    width: 3px; height: 3px;
+    left: 35%;
+    animation-duration: 16s;
+    animation-delay: 9s;
+    background: rgba(200, 149, 108, 0.25);
+}
+
+@keyframes floatParticle {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-10vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* Slow gradient shift */
+.hero {
+    animation: heroGradientShift 15s ease-in-out infinite alternate;
+}
+
+@keyframes heroGradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Enhanced geo shapes - more dynamic */
+.hero-geo-shape:nth-child(1) {
+    animation: floatShape1 20s ease-in-out infinite;
+}
+.hero-geo-shape:nth-child(2) {
+    animation: floatShape2 25s ease-in-out infinite;
+}
+.hero-geo-shape:nth-child(3) {
+    animation: floatShape3 15s ease-in-out infinite;
+}
+
+@keyframes floatShape1 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+    25% { transform: translate(30px, -20px) rotate(5deg) scale(1.05); }
+    50% { transform: translate(-15px, 25px) rotate(-3deg) scale(0.95); }
+    75% { transform: translate(20px, -10px) rotate(2deg) scale(1.02); }
+}
+
+@keyframes floatShape2 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+    33% { transform: translate(-25px, 15px) rotate(-5deg) scale(1.03); }
+    66% { transform: translate(15px, -20px) rotate(3deg) scale(0.97); }
+}
+
+@keyframes floatShape3 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(15px, 10px) rotate(4deg); }
+    66% { transform: translate(-10px, -15px) rotate(-2deg); }
+}
+
+/* Shimmer line across hero */
+.hero-shimmer {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(200, 149, 108, 0.3) 30%,
+        rgba(200, 149, 108, 0.8) 50%,
+        rgba(200, 149, 108, 0.3) 70%,
+        transparent 100%
+    );
+    animation: shimmerLine 8s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 2;
+}
+
+@keyframes shimmerLine {
+    0% { left: -60%; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { left: 160%; opacity: 0; }
+}
+
+/* Pulsing glow orbs */
+.hero-glow {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.hero-glow:nth-child(1) {
+    width: 300px;
+    height: 300px;
+    top: 15%;
+    right: 10%;
+    background: radial-gradient(circle, rgba(200,149,108,0.06) 0%, transparent 70%);
+    animation: pulseGlow 8s ease-in-out infinite;
+}
+
+.hero-glow:nth-child(2) {
+    width: 200px;
+    height: 200px;
+    bottom: 20%;
+    left: 15%;
+    background: radial-gradient(circle, rgba(200,149,108,0.04) 0%, transparent 70%);
+    animation: pulseGlow 6s ease-in-out infinite reverse;
+}
+
+@keyframes pulseGlow {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.3); opacity: 1; }
+}
+
+/* Hero title shimmer effect */
+.hero-title .highlight {
+    background: linear-gradient(
+        135deg,
+        var(--accent-light) 0%,
+        var(--gold) 25%,
+        #e8c89e 50%,
+        var(--gold) 75%,
+        var(--accent-light) 100%
+    );
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmerText 4s ease-in-out infinite;
+}
+
+@keyframes shimmerText {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Subtitle fade-in */
+.hero-subtitle {
+    animation: fadeInUp 1s ease 0.5s both;
+}
+
+.hero-actions {
+    animation: fadeInUp 1s ease 0.8s both;
+}
+
+.hero-badge {
+    animation: fadeInUp 0.8s ease 0.2s both;
+}
+
+.hero-title {
+    animation: fadeInUp 1s ease 0.3s both;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   Service Grid - 6 cards (2 rows × 3 cols)
+   ============================================ */
+.services-grid {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+/* ============================================
+   Stats - updated to 6 service areas
+   ============================================ */
+.stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 1024px) {
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+    .services-grid { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+}
