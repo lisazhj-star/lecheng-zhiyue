@@ -1023,7 +1023,9 @@ ul { list-style: none; }
 
 .course-meta {
     display: flex;
+    flex-wrap: wrap;
     gap: 16px;
+    row-gap: 6px;
     margin-bottom: 14px;
     font-size: 12px;
     color: var(--text-light);
