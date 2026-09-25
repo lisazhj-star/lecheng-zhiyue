@@ -993,6 +993,10 @@ ul { list-style: none; }
     background: linear-gradient(135deg, #e4eef7, #c8dcee);
     color: #1a5a8c;
 }
+.course-badge.talent {
+    background: linear-gradient(135deg, #e2f2f0, #c4e5e0);
+    color: #1a7a6e;
+}
 .course-badge.senior {
     background: linear-gradient(135deg, #f7ede4, #eedcc8);
     color: #9a6a3a;
@@ -1535,6 +1539,10 @@ ul { list-style: none; }
 .modal-hero-badge.mid {
     background: linear-gradient(135deg, #e4eef7, #c8dcee);
     color: #1a5a8c;
+}
+.modal-hero-badge.talent {
+    background: linear-gradient(135deg, #e2f2f0, #c4e5e0);
+    color: #1a7a6e;
 }
 .modal-hero-badge.senior {
     background: linear-gradient(135deg, #f7ede4, #eedcc8);
