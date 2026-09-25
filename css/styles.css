@@ -2098,6 +2098,129 @@ ul { list-style: none; }
 }
 
 /* ============================================
+   旗舰产品线：管理者成长训练营
+   ============================================ */
+.program-band {
+    position: relative;
+    overflow: hidden;
+    padding: 56px 0;
+    margin-bottom: 64px;
+    background:
+        radial-gradient(ellipse at 12% 18%, rgba(200, 149, 108, 0.16) 0%, transparent 55%),
+        radial-gradient(ellipse at 88% 85%, rgba(255, 255, 255, 0.06) 0%, transparent 55%),
+        linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 58%, var(--primary-light) 100%);
+}
+
+.program-band::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+}
+
+.program-band .container { position: relative; z-index: 1; }
+
+.program-band-tag {
+    display: inline-block;
+    padding: 5px 16px;
+    border: 1px solid rgba(224, 184, 152, 0.45);
+    border-radius: 50px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--accent-light);
+    margin-bottom: 16px;
+}
+
+.program-band-head h3 {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text-white);
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+}
+
+.program-band-head p {
+    font-size: 14px;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.62);
+    max-width: 720px;
+    margin-bottom: 30px;
+}
+
+.program-path {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-bottom: 28px;
+}
+
+.program-path li {
+    position: relative;
+    padding: 16px 12px;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: var(--transition);
+}
+
+.program-path li:hover {
+    background: rgba(224, 184, 152, 0.13);
+    border-color: rgba(224, 184, 152, 0.42);
+    transform: translateY(-3px);
+}
+
+.path-num {
+    display: block;
+    font-family: var(--font-en);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--accent);
+    margin-bottom: 9px;
+}
+
+.path-name {
+    display: block;
+    font-size: 12px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.82);
+}
+
+.program-highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 24px;
+}
+
+.program-highlights span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.program-highlights i {
+    font-size: 12px;
+    color: var(--accent-light);
+}
+
+@media (max-width: 1024px) {
+    .program-path { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (max-width: 768px) {
+    .program-band { padding: 40px 0; margin-bottom: 48px; }
+    .program-band-head h3 { font-size: 21px; }
+    .program-band-head p { font-size: 13px; }
+    .program-path { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .program-path li { padding: 13px 10px; }
+}
+
+/* ============================================
    无障碍：尊重系统"减少动态效果"设置
    ============================================ */
 @media (prefers-reduced-motion: reduce) {
