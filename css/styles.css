@@ -684,27 +684,101 @@ ul { list-style: none; }
     aspect-ratio: 4/5;
     border-radius: var(--radius-lg);
     overflow: hidden;
-    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    background: var(--primary-dark);
+    box-shadow: var(--shadow-lg);
+    isolation: isolate;
 }
 
-.about-image-placeholder {
+/* 森林照片：缓慢推近，营造生长感 */
+.about-photo {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: rgba(255,255,255,0.15);
-    font-size: 100px;
-    position: relative;
+    object-fit: cover;
+    transform-origin: 50% 62%;
+    animation: aboutKenBurns 24s ease-in-out infinite alternate;
 }
 
-.about-image-placeholder::before {
-    content: '';
+@keyframes aboutKenBurns {
+    0%   { transform: scale(1.02) translate3d(0, 0, 0); }
+    100% { transform: scale(1.14) translate3d(-1.5%, -2.5%, 0); }
+}
+
+/* 品牌色叠加：深蓝压暗 + 暖金收边 */
+.about-photo-tint {
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(circle at 30% 40%, rgba(200,149,108,0.1) 0%, transparent 50%),
-        radial-gradient(circle at 70% 60%, rgba(255,255,255,0.05) 0%, transparent 50%);
+        linear-gradient(180deg,
+            rgba(15, 36, 64, 0.52) 0%,
+            rgba(26, 58, 92, 0.14) 42%,
+            rgba(15, 36, 64, 0.46) 100%),
+        linear-gradient(118deg,
+            rgba(15, 36, 64, 0.42) 0%,
+            rgba(26, 58, 92, 0.02) 58%);
+    pointer-events: none;
+}
+
+/* 光带缓缓扫过 */
+.about-photo-rays {
+    position: absolute;
+    inset: -30%;
+    background: linear-gradient(
+        100deg,
+        transparent 38%,
+        rgba(224, 184, 152, 0.20) 47%,
+        rgba(255, 255, 255, 0.10) 50%,
+        rgba(224, 184, 152, 0.16) 53%,
+        transparent 62%
+    );
+    animation: aboutRays 9s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes aboutRays {
+    0%   { transform: translateX(-36%); opacity: 0; }
+    18%  { opacity: 1; }
+    82%  { opacity: 1; }
+    100% { transform: translateX(36%); opacity: 0; }
+}
+
+/* 组织连接网络：象征人才之间的连接与协同 */
+.about-photo-network {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.about-photo-network line {
+    stroke: rgba(224, 184, 152, 0.5);
+    stroke-width: 1.2;
+    stroke-dasharray: 10 14;
+    animation: aboutFlow 6s linear infinite;
+}
+
+.about-photo-network circle {
+    fill: rgba(232, 200, 158, 0.95);
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: aboutNode 3.2s ease-in-out infinite;
+}
+
+.about-photo-network circle:nth-of-type(1) { animation-delay: 0s; }
+.about-photo-network circle:nth-of-type(2) { animation-delay: 0.55s; }
+.about-photo-network circle:nth-of-type(3) { animation-delay: 1.1s; }
+.about-photo-network circle:nth-of-type(4) { animation-delay: 1.65s; }
+.about-photo-network circle:nth-of-type(5) { animation-delay: 2.2s; }
+
+@keyframes aboutFlow {
+    to { stroke-dashoffset: -48; }
+}
+
+@keyframes aboutNode {
+    0%, 100% { transform: scale(1);   opacity: 0.95; }
+    50%      { transform: scale(1.85); opacity: 0.35; }
 }
 
 .about-quote-card {
@@ -1896,35 +1970,47 @@ ul { list-style: none; }
     100% { left: 160%; opacity: 0; }
 }
 
-/* Pulsing glow orbs */
-.hero-glow {
+/* 思维网络：象征连接、协同与系统思考 */
+.hero-network {
     position: absolute;
-    border-radius: 50%;
+    inset: 0;
+    width: 100%;
+    height: 100%;
     pointer-events: none;
     z-index: 1;
+    opacity: 0.6;
 }
 
-.hero-glow:nth-child(1) {
-    width: 300px;
-    height: 300px;
-    top: 15%;
-    right: 10%;
-    background: radial-gradient(circle, rgba(200,149,108,0.06) 0%, transparent 70%);
-    animation: pulseGlow 8s ease-in-out infinite;
+.hero-network line {
+    stroke: rgba(224, 184, 152, 0.26);
+    stroke-width: 1;
+    stroke-dasharray: 6 16;
+    animation: heroFlow 9s linear infinite;
 }
 
-.hero-glow:nth-child(2) {
-    width: 200px;
-    height: 200px;
-    bottom: 20%;
-    left: 15%;
-    background: radial-gradient(circle, rgba(200,149,108,0.04) 0%, transparent 70%);
-    animation: pulseGlow 6s ease-in-out infinite reverse;
+.hero-network circle {
+    fill: rgba(232, 200, 158, 0.8);
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: heroNode 4s ease-in-out infinite;
 }
 
-@keyframes pulseGlow {
-    0%, 100% { transform: scale(1); opacity: 0.5; }
-    50% { transform: scale(1.3); opacity: 1; }
+.hero-network circle:nth-of-type(1) { animation-delay: 0s; }
+.hero-network circle:nth-of-type(2) { animation-delay: 0.5s; }
+.hero-network circle:nth-of-type(3) { animation-delay: 1s; }
+.hero-network circle:nth-of-type(4) { animation-delay: 1.5s; }
+.hero-network circle:nth-of-type(5) { animation-delay: 2s; }
+.hero-network circle:nth-of-type(6) { animation-delay: 2.5s; }
+.hero-network circle:nth-of-type(7) { animation-delay: 3s; }
+.hero-network circle:nth-of-type(8) { animation-delay: 3.5s; }
+
+@keyframes heroFlow {
+    to { stroke-dashoffset: -44; }
+}
+
+@keyframes heroNode {
+    0%, 100% { transform: scale(1);   opacity: 0.75; }
+    50%      { transform: scale(1.75); opacity: 0.25; }
 }
 
 /* Hero title shimmer effect */
@@ -1999,4 +2085,25 @@ ul { list-style: none; }
 @media (max-width: 768px) {
     .services-grid { grid-template-columns: 1fr; }
     .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+}
+
+/* ============================================
+   无障碍：尊重系统"减少动态效果"设置
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    .about-photo,
+    .about-photo-rays,
+    .about-photo-network line,
+    .about-photo-network circle,
+    .hero-network line,
+    .hero-network circle,
+    .particle,
+    .hero-shimmer,
+    .hero-geo-shape,
+    .hero,
+    .hero-title .highlight {
+        animation: none !important;
+    }
+    .about-photo-rays { opacity: 0; }
+    html { scroll-behavior: auto; }
 }
