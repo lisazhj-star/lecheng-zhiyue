@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>飞书知识库效果演示 · 乐诚智悦</title>
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+:root{
+  --fs-blue:#3370ff;
+  --fs-bg:#f5f6f7;
+  --fs-line:#dee0e3;
+  --fs-text:#1f2329;
+  --fs-sub:#646a73;
+  --fs-hover:#f2f3f5;
+  --fs-white:#fff;
+}
+html,body{height:100%;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  color:var(--fs-text); background:var(--fs-white); overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---------- 顶部演示提示 ---------- */
+.notice{
+  height:34px; background:#fff7e6; border-bottom:1px solid #ffe0a3;
+  display:flex; align-items:center; justify-content:center; gap:12px;
+  font-size:12.5px; color:#8a6116; position:relative; z-index:30;
+}
+.notice b{font-weight:600;}
+.notice button{
+  border:1px solid #e8c887; background:#fff; color:#8a6116;
+  font-size:12px; padding:3px 12px; border-radius:4px; cursor:pointer;
+  font-family:inherit;
+}
+.notice.hide{display:none;}
+
+/* ---------- 顶部栏 ---------- */
+.topbar{
+  height:52px; border-bottom:1px solid var(--fs-line); background:#fff;
+  display:flex; align-items:center; padding:0 16px; gap:12px; position:relative; z-index:20;
+}
+.logo{
+  width:28px;height:28px;border-radius:6px;flex:0 0 auto;
+  background:linear-gradient(135deg,#1a3a5c,#2a5a8c);
+  color:#fff;font-size:13px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+}
+.kb-name{font-size:14px;font-weight:600;}
+.topbar .sp{flex:1;}
+.tbtn{
+  border:none;background:transparent;font-family:inherit;font-size:13px;
+  color:var(--fs-sub);padding:6px 12px;border-radius:6px;cursor:pointer;
+}
+.tbtn:hover{background:var(--fs-hover);}
+.tbtn.primary{background:var(--fs-blue);color:#fff;}
+.tbtn.primary:hover{background:#2860e0;}
+.avatar{
+  width:28px;height:28px;border-radius:50%;background:#c8956c;color:#fff;
+  font-size:12px;display:flex;align-items:center;justify-content:center;font-weight:600;
+}
+
+/* ---------- 布局 ---------- */
+.layout{display:flex; height:calc(100% - 52px);}
+.notice:not(.hide) ~ .layout{height:calc(100% - 86px);}
+
+/* ---------- 左侧目录 ---------- */
+.sidebar{
+  width:272px; flex:0 0 auto; background:var(--fs-bg);
+  border-right:1px solid var(--fs-line);
+  display:flex; flex-direction:column; overflow:hidden;
+}
+.sb-head{padding:14px 16px 10px;}
+.sb-title{font-size:13px;font-weight:600;color:var(--fs-text);margin-bottom:2px;}
+.sb-sub{font-size:11.5px;color:var(--fs-sub);}
+.sb-search{
+  margin:0 12px 10px; position:relative;
+}
+.sb-search input{
+  width:100%;height:30px;border:1px solid transparent;background:#fff;
+  border-radius:6px;padding:0 10px 0 30px;font-size:12.5px;
+  font-family:inherit;color:var(--fs-text);outline:none;
+}
+.sb-search input:focus{border-color:var(--fs-blue);}
+.sb-search::before{
+  content:''; position:absolute; left:10px; top:50%; width:12px;height:12px;
+  transform:translateY(-50%);
+  background:currentColor; color:#a3a8b0;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 2a8 8 0 1 0 4.9 14.3l5.4 5.4 1.4-1.4-5.4-5.4A8 8 0 0 0 10 2zm0 2a6 6 0 1 1 0 12 6 6 0 0 1 0-12z'/%3E%3C/svg%3E") center/contain no-repeat;
+          mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 2a8 8 0 1 0 4.9 14.3l5.4 5.4 1.4-1.4-5.4-5.4A8 8 0 0 0 10 2zm0 2a6 6 0 1 1 0 12 6 6 0 0 1 0-12z'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+.tree{flex:1;overflow-y:auto;padding:2px 8px 16px;}
+.tree::-webkit-scrollbar{width:6px;}
+.tree::-webkit-scrollbar-thumb{background:#d6d9dd;border-radius:3px;}
+.tree-item{
+  display:flex;align-items:center;gap:8px;width:100%;
+  border:none;background:transparent;font-family:inherit;text-align:left;
+  font-size:13px;color:var(--fs-text);padding:7px 8px;border-radius:6px;
+  cursor:pointer;line-height:1.45;
+}
+.tree-item:hover{background:var(--fs-hover);}
+.tree-item.active{background:#e1eaff;color:var(--fs-blue);font-weight:500;}
+.tree-item .n{
+  flex:0 0 auto;font-size:11px;color:var(--fs-sub);font-variant-numeric:tabular-nums;
+}
+.tree-item.active .n{color:var(--fs-blue);}
+.tree-item .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.tree-group{
+  display:flex;align-items:center;gap:6px;padding:7px 8px;font-size:12px;
+  color:var(--fs-sub);font-weight:500;
+}
+.tree-group .caret{font-size:9px;transform:rotate(90deg);display:inline-block;}
+
+/* ---------- 右侧文档 ---------- */
+.doc{flex:1;overflow-y:auto;background:#fff;}
+.doc-inner{max-width:900px;margin:0 auto;padding:36px 40px 80px;}
+.doc-title{font-size:26px;font-weight:700;letter-spacing:.5px;line-height:1.4;}
+.doc-desc{font-size:14px;color:var(--fs-sub);margin-top:10px;line-height:1.75;}
+.doc-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+.tag{
+  font-size:12px;color:var(--fs-sub);background:var(--fs-bg);
+  padding:4px 11px;border-radius:4px;
+}
+.doc-divider{height:1px;background:var(--fs-line);margin:24px 0 26px;}
+.hint{
+  background:#f7f9ff;border:1px solid #dbe6ff;border-radius:8px;
+  padding:14px 18px;font-size:13px;color:#3d5a99;line-height:1.75;margin-bottom:26px;
+}
+.hint b{color:#2b4a8c;}
+
+/* 页面预览 */
+.pages{display:flex;flex-direction:column;gap:16px;}
+.pg{
+  position:relative;border:1px solid var(--fs-line);border-radius:8px;
+  overflow:hidden;background:#fff;
+}
+.pg img{width:100%;display:block;}
+.pg .pn{
+  position:absolute;top:8px;right:8px;font-size:11px;color:#fff;
+  background:rgba(31,35,41,.55);padding:2px 9px;border-radius:10px;
+  font-variant-numeric:tabular-nums;
+}
+
+/* ---------- 移动端 ---------- */
+.mbar{display:none;}
+@media (max-width:820px){
+  .sidebar{
+    position:fixed;top:52px;left:0;bottom:0;z-index:40;
+    transform:translateX(-100%);transition:transform .25s ease;
+    box-shadow:2px 0 16px rgba(0,0,0,.12); width:82%;max-width:320px;
+  }
+  .sidebar.open{transform:translateX(0);}
+  .mbar{display:inline-flex;}
+  .doc-inner{padding:22px 16px 60px;}
+  .doc-title{font-size:20px;}
+  .kb-name{font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:40vw;}
+  .notice{font-size:11.5px;padding:0 10px;gap:8px;}
+}
+</style>
+</head>
+<body>
+
+<div class="notice" id="notice">
+  <span><b>飞书知识库效果演示</b> — 这是本地原型，用于预览体验；真实飞书页面需注册账号后创建</span>
+  <button onclick="document.getElementById('notice').classList.add('hide')">知道了</button>
+</div>
+
+<header class="topbar">
+  <button class="tbtn mbar" id="menuBtn" aria-label="目录">☰</button>
+  <div class="logo">乐</div>
+  <div class="kb-name">学员手册合辑</div>
+  <div class="sp"></div>
+  <button class="tbtn">搜索</button>
+  <button class="tbtn primary">分享</button>
+  <div class="avatar">李</div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-head">
+      <div class="sb-title">学员手册合辑</div>
+      <div class="sb-sub">共 11 本 · 203 页</div>
+    </div>
+    <div class="sb-search"><input id="search" type="text" placeholder="搜索手册"></div>
+    <nav class="tree" id="tree">
+      <div class="tree-group"><span class="caret">▶</span>管理者成长训练营</div>
+      <!-- JS 注入 -->
+    </nav>
+  </aside>
+
+  <main class="doc" id="doc">
+    <div class="doc-inner">
+      <h1 class="doc-title" id="docTitle"></h1>
+      <p class="doc-desc" id="docDesc"></p>
+      <div class="doc-tags" id="docTags"></div>
+      <div class="doc-divider"></div>
+      <div class="hint">
+        在真实飞书里，这一页可以直接<strong>上传 PDF 作为附件</strong>在线预览，也可以把内容做成飞书文档；
+        左侧目录树就是上面这份知识库结构，学员点开任意一本即可阅读，手机端有原生 App。
+      </div>
+      <div class="pages" id="pages"></div>
+    </div>
+  </main>
+</div>
+
+<script>
+var BOOKS = [
+ {no:'01', title:'从专业到管理转身',   desc:'新管理者蜕变四阶段、基层管理胜任力模型、目标思维、PDCA 戴明环。',        date:'2024-08', ver:'V1',   pages:8},
+ {no:'02', title:'目标管理 · 拥抱 OKR', desc:'目标管理本质、战略地图与平衡计分卡、OKR 定义与制定流程、OKR 与 KPI 的区别。', date:'2025-04', ver:'V1',   pages:23},
+ {no:'03', title:'管理者沟通及社交风格', desc:'职场沟通的本质、社交风格模型与识别、信任公式、教练式沟通与反馈。',       date:'2024-09', ver:'V2',   pages:26},
+ {no:'04', title:'管理者的时间管理',    desc:'时间管理的本质、关注圈与影响圈、时间矩阵、要事第一与复盘计划。',         date:'2025-04', ver:'V2',   pages:20},
+ {no:'05', title:'管理者高效会议力',    desc:'会议的本质与成本、高效会议要素、管理者会议力罗盘、会前中后的管理方法。',   date:'2025-06', ver:'V2',   pages:25},
+ {no:'06', title:'教练式领导与 IDP',    desc:'教练的定义与传统指导的区别、GROW 模型、教练式提问、个人发展计划（IDP）辅导。', date:'2025-09', ver:'—',   pages:23},
+ {no:'07', title:'绩效管理与平衡计分卡', desc:'绩效管理完整框架、KPI 设计、平衡计分卡四维度、绩效面谈与改进计划。',      date:'2025-12', ver:'V2.1', pages:20},
+ {no:'08', title:'技能矩阵与个人发展计划', desc:'能力培养体系常见问题、技能矩阵搭建与现场操作、人才盘点、IDP 三步法。',     date:'2026-03', ver:'V2',   pages:14},
+ {no:'09', title:'高效新人带教实训',    desc:'OJT 带教理念、3 张表 + PDCA 日循环、5 动作带队法、带教计划与跟踪工具。',  date:'2026-06', ver:'V2',   pages:15},
+ {no:'10', title:'领导力校准及后备人才选育', desc:'企业领导力 DNA 与七维领导力、人才九宫格盘点、关键岗位继任地图与 B 角机制。', date:'2026-08', ver:'V3.1', pages:20},
+ {no:'11', title:'领导力评测 35 题',    desc:'领导力 7 力评测 35 题的知识点精讲与建议行动，配套现场填写单使用。',       date:'2026-08', ver:'V3',   pages:9}
+];
+
+var ASSET_BASE = '../../handbook/assets/';
+var current = '01';
+
+function pad(n){ return n < 10 ? '0' + n : '' + n; }
+
+function renderTree(filter){
+  var tree = document.getElementById('tree');
+  var html = '<div class="tree-group"><span class="caret">▶</span>管理者成长训练营</div>';
+  BOOKS.forEach(function(b){
+    var hit = !filter || b.title.indexOf(filter) > -1 || b.no.indexOf(filter) > -1;
+    if (!hit) return;
+    html += '<button class="tree-item' + (b.no === current ? ' active' : '') + '" data-no="' + b.no + '">' +
+            '<span class="n">' + b.no + '</span><span class="t">' + b.title + '</span></button>';
+  });
+  tree.innerHTML = html;
+  Array.prototype.forEach.call(tree.querySelectorAll('.tree-item'), function(el){
+    el.addEventListener('click', function(){
+      openBook(el.getAttribute('data-no'));
+      document.getElementById('sidebar').classList.remove('open');
+    });
+  });
+}
+
+function openBook(no){
+  var b = BOOKS.filter(function(x){ return x.no === no; })[0];
+  if (!b) return;
+  current = no;
+
+  document.getElementById('docTitle').textContent = b.no + '  ' + b.title;
+  document.getElementById('docDesc').textContent = b.desc;
+  document.getElementById('docTags').innerHTML =
+    '<span class="tag">授课时间 ' + b.date + '</span>' +
+    '<span class="tag">共 ' + b.pages + ' 页</span>' +
+    '<span class="tag">版本 ' + b.ver + '</span>' +
+    '<span class="tag">类型 学员手册</span>';
+
+  var pages = '';
+  for (var i = 1; i <= b.pages; i++){
+    pages += '<div class="pg"><span class="pn">' + i + ' / ' + b.pages + '</span>' +
+             '<img src="' + ASSET_BASE + b.no + '/p' + pad(i) + '.webp" alt="' + b.title +
+             ' 第 ' + i + ' 页" loading="' + (i <= 2 ? 'eager' : 'lazy') + '" decoding="async"></div>';
+  }
+  document.getElementById('pages').innerHTML = pages;
+  document.getElementById('doc').scrollTop = 0;
+
+  renderTree(document.getElementById('search').value.trim());
+}
+
+document.getElementById('search').addEventListener('input', function(){
+  renderTree(this.value.trim());
+});
+
+document.getElementById('menuBtn').addEventListener('click', function(){
+  document.getElementById('sidebar').classList.toggle('open');
+});
+
+renderTree('');
+openBook('01');
+</script>
+</body>
+</html>
